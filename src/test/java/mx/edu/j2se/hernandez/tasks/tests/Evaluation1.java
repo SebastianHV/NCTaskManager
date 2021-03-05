@@ -20,6 +20,7 @@ public class Evaluation1 {
         }
     }
 
+    // Gets the index of the biggest Circle in the array
     public static int biggestCircle(Circle[] arrayCircle) {
         int bigCircleIndex = 0;
         double biggestArea = 0;
