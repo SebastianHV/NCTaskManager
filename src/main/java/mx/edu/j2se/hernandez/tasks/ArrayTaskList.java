@@ -4,6 +4,7 @@ public class ArrayTaskList {
 
     private Tasks[] arrayTaskList = new Tasks[0];
 
+    // Adds a tasks to the array of tasks
     public void add (Tasks task) {
         Tasks newArray[] = new Tasks[arrayTaskList.length + 1];
         System.arraycopy(arrayTaskList, 0, newArray, 0, arrayTaskList.length);
@@ -14,6 +15,7 @@ public class ArrayTaskList {
 
     }
 
+    // Removes a task from the array of tasks
     public boolean remove(Tasks task) {
         for (int i = 0; i < arrayTaskList.length; i++) {
             if (task.equals(arrayTaskList[i])) {
@@ -27,16 +29,19 @@ public class ArrayTaskList {
         return false;
     }
 
+    // Returns the number of elements of the array of tasks
     public int size() {
         if (getArrayTaskList() == null)
             return 0;
         return arrayTaskList.length;
     }
 
+    // Returns the task from the list whose index is the given one
     public Tasks getTask(int index) {
         return arrayTaskList[index];
     }
 
+    // Returns a list of tasks that occur from the time to the given time.
     public ArrayTaskList incoming(int from, int to) {
         ArrayTaskList incomingTasksList = new ArrayTaskList();
         for (int i = 0; i < arrayTaskList.length; i++) {
@@ -69,6 +74,7 @@ public class ArrayTaskList {
         return incomingTasksList;
     }
 
+    // Returns the array of tasks
     public Tasks[] getArrayTaskList() {
         return arrayTaskList;
     }

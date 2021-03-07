@@ -60,10 +60,8 @@ public class Tasks {
         if (isRepetitive()){
             this.interval = 0;
             this.repetitive = false;
-            this.time = time;
-        } else {
-            this.time = time;
         }
+        this.time = time;
     }
 
     /* Methods for repetitive tasks */
@@ -110,12 +108,8 @@ public class Tasks {
         }
     }
 
-    /*public boolean isRepeated() {
-        if (this.interval > 0)
-            return true;
-        return false;
-    }*/
-
+    // Gives the next execution time of the task, starting from the current time given.
+    // Returns -1 if not next time of execution found.
     public int nextTimeAfter(int current) {
         if (isActive()) {
             if (isRepetitive()) {
@@ -145,10 +139,12 @@ public class Tasks {
         }
     }
 
+    // Is the Task repetitive?
     public boolean isRepetitive() {
         return repetitive;
     }
 
+    // Set if the Task is repetitive or not
     public void setRepetitive(boolean repetitive) {
         this.repetitive = repetitive;
     }
