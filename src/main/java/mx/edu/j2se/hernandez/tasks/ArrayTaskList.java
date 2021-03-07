@@ -40,25 +40,29 @@ public class ArrayTaskList {
     public ArrayTaskList incoming(int from, int to) {
         ArrayTaskList incomingTasksList = new ArrayTaskList();
         for (int i = 0; i < arrayTaskList.length; i++) {
-            if (arrayTaskList[i].isActive()){
-                if (arrayTaskList[i].isRepetitive()){
-                    int sumTime = arrayTaskList[i].getStartTime();
-                    while (sumTime <= arrayTaskList[i].getEndTime()) {
-                        if (sumTime >= from && sumTime <= to) {
-                            incomingTasksList.add(arrayTaskList[i]);
-                            break;
-                        }
-                        else {
-                            sumTime += arrayTaskList[i].getRepeatInterval();
-                        }
-                    }
-
-                }
-                else {
-                    if (arrayTaskList[i].getTime() >= from && arrayTaskList[i].getTime() <= to){
-                        incomingTasksList.add(arrayTaskList[i]);
-                    }
-                }
+//            if (arrayTaskList[i].isActive()){
+//                if (arrayTaskList[i].isRepetitive()){
+//                    int sumTime = arrayTaskList[i].getStartTime();
+//                    while (sumTime <= arrayTaskList[i].getEndTime()) {
+//                        if (sumTime >= from && sumTime <= to) {
+//                            incomingTasksList.add(arrayTaskList[i]);
+//                            break;
+//                        }
+//                        else {
+//                            sumTime += arrayTaskList[i].getRepeatInterval();
+//                        }
+//                    }
+//
+//                }
+//                else {
+//                    if (arrayTaskList[i].getTime() >= from && arrayTaskList[i].getTime() <= to){
+//                        incomingTasksList.add(arrayTaskList[i]);
+//                    }
+//                }
+//            }
+            int nextTimeFrom = arrayTaskList[i].nextTimeAfter(from);
+            if (nextTimeFrom <= to && nextTimeFrom != -1) {
+                incomingTasksList.add(arrayTaskList[i]);
             }
         }
 
