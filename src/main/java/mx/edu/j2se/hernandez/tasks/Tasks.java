@@ -60,6 +60,7 @@ public class Tasks {
         if (isRepetitive()){
             this.interval = 0;
             this.repetitive = false;
+            this.time = time;
         } else {
             this.time = time;
         }
