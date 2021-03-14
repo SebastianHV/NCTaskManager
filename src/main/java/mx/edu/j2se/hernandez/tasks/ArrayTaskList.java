@@ -5,13 +5,18 @@ public class ArrayTaskList {
     private Tasks[] arrayTaskList = new Tasks[0];
 
     // Adds a tasks to the array of tasks
-    public void add (Tasks task) {
-        Tasks newArray[] = new Tasks[arrayTaskList.length + 1];
-        System.arraycopy(arrayTaskList, 0, newArray, 0, arrayTaskList.length);
+    public void add (Tasks task) throws Exception {
+        if (task instanceof Tasks) {
+            Tasks newArray[] = new Tasks[arrayTaskList.length + 1];
+            System.arraycopy(arrayTaskList, 0, newArray, 0, arrayTaskList.length);
 
-        newArray[newArray.length - 1] = task;
+            newArray[newArray.length - 1] = task;
 
-        arrayTaskList = newArray;
+            arrayTaskList = newArray;
+        }
+        else
+            throw new Exception("Invalid instance of Tasks");
+
 
     }
 
@@ -37,7 +42,9 @@ public class ArrayTaskList {
     }
 
     // Returns the task from the list whose index is the given one
-    public Tasks getTask(int index) {
+    public Tasks getTask(int index) throws IndexOutOfBoundsException {
+        if (index >= arrayTaskList.length)
+            throw new IndexOutOfBoundsException("Invalid index. Greater than the array length.");
         return arrayTaskList[index];
     }
 
@@ -45,29 +52,13 @@ public class ArrayTaskList {
     public ArrayTaskList incoming(int from, int to) {
         ArrayTaskList incomingTasksList = new ArrayTaskList();
         for (int i = 0; i < arrayTaskList.length; i++) {
-//            if (arrayTaskList[i].isActive()){
-//                if (arrayTaskList[i].isRepetitive()){
-//                    int sumTime = arrayTaskList[i].getStartTime();
-//                    while (sumTime <= arrayTaskList[i].getEndTime()) {
-//                        if (sumTime >= from && sumTime <= to) {
-//                            incomingTasksList.add(arrayTaskList[i]);
-//                            break;
-//                        }
-//                        else {
-//                            sumTime += arrayTaskList[i].getRepeatInterval();
-//                        }
-//                    }
-//
-//                }
-//                else {
-//                    if (arrayTaskList[i].getTime() >= from && arrayTaskList[i].getTime() <= to){
-//                        incomingTasksList.add(arrayTaskList[i]);
-//                    }
-//                }
-//            }
             int nextTimeFrom = arrayTaskList[i].nextTimeAfter(from);
             if (nextTimeFrom <= to && nextTimeFrom != -1) {
-                incomingTasksList.add(arrayTaskList[i]);
+                try {
+                    incomingTasksList.add(arrayTaskList[i]);
+                } catch (Exception e) {
+                    e.getMessage();
+                }
             }
         }
 

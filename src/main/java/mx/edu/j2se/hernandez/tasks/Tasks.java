@@ -11,7 +11,10 @@ public class Tasks {
     private boolean repetitive;
 
     // Constructor for non-repetitive tasks
-    public Tasks(String title, int time) {
+    public Tasks(String title, int time) throws IllegalArgumentException {
+        if (time < 0) {
+            throw new IllegalArgumentException("The time must not be a negative number");
+        }
         this.title = title;
         this.time = time;
         this.interval = 0;
@@ -20,7 +23,13 @@ public class Tasks {
     }
 
     // Constructor for repetitive tasks
-    public Tasks(String title, int start, int end, int interval){
+    public Tasks(String title, int start, int end, int interval) throws IllegalArgumentException {
+        if (start < 0 || end < 0) {
+            throw new IllegalArgumentException("The start and end time must not are negative numbers");
+        }
+        if (interval <= 0) {
+            throw new IllegalArgumentException("The interval should be grater than 0");
+        }
         this.title = title;
         this.start = start;
         this.end = end;
