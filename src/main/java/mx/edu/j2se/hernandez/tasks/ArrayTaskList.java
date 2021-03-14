@@ -1,6 +1,6 @@
 package mx.edu.j2se.hernandez.tasks;
 
-public class ArrayTaskList {
+public class ArrayTaskList extends AbstractTaskList{
 
     private Tasks[] arrayTaskList = new Tasks[0];
 

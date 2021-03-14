@@ -75,6 +75,12 @@ public class Main {
 			System.out.println("***** Incoming tasks from hour 200 to 260: *****");
 			LinkedTaskList linkedIncomingTasks = linkedTaskList.incoming(200, 260);
 			System.out.println(linkedIncomingTasks.getList());
+			System.out.println("********************");
+			System.out.println("***** Creating a Task List with the TaskListFactory *****");
+			AbstractTaskList factoryArrayList = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
+			AbstractTaskList factoryLinkedList = TaskListFactory.createTaskList(ListTypes.types.LINKED);
+			System.out.println("********************");
+
 
 		}
 		catch (Exception e) {

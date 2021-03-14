@@ -1,7 +1,7 @@
 package mx.edu.j2se.hernandez.tasks;
 
 
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList{
 
     // The first element of the linked list is our head
     private Node headOfList = null;
