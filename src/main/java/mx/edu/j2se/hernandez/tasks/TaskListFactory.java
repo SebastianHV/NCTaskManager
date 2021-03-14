@@ -1,5 +1,6 @@
 package mx.edu.j2se.hernandez.tasks;
 
+// Factory that creates ArrayTaskList or LinkedTaskList
 public class TaskListFactory {
     public static AbstractTaskList createTaskList(ListTypes.types type) throws IllegalArgumentException {
         AbstractTaskList taskList;
