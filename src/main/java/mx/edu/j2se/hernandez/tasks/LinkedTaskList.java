@@ -78,6 +78,8 @@ public class LinkedTaskList extends AbstractTaskList{
         int currentTaskNumber = 0;
         Node currentNode = headOfList;
         while (currentNode != null) {
+//            System.out.println("Inside getTask method, currentTaskNumber value = " + currentTaskNumber);
+//            System.out.println("Inside getTask method, index value = " + index);
             if (currentTaskNumber == index) {
                 return currentNode.data;
             }

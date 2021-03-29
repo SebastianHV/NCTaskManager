@@ -1,6 +1,8 @@
 package mx.edu.j2se.hernandez.tasks;
 
 
+import java.util.Iterator;
+
 public class Main {
 	
 	public static void main(String[] args) {
@@ -80,11 +82,56 @@ public class Main {
 			AbstractTaskList factoryArrayList = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
 			AbstractTaskList factoryLinkedList = TaskListFactory.createTaskList(ListTypes.types.LINKED);
 			System.out.println("********************");
+			System.out.println("*** Printing List with Iterator ***");
+			// Iterator<Tasks> ite = factoryLinkedList.iterator();
+			System.out.println("factoryLinkedList reference: " + linkedTaskList);
+			for (Tasks task: linkedTaskList ) {
+				System.out.println(task.getTitle());
+
+			}
+			System.out.println("********************");
+            System.out.println("*** Trying equals method ***");
+            AbstractTaskList anotherTaskList = linkedTaskList;
+            System.out.println("Are both objects equal: " + anotherTaskList.equals(linkedTaskList));
+
+            System.out.println("********************");
+            System.out.println("*** Trying hashCode method ***");
+            System.out.println("anotherTaskList hashcode: " + anotherTaskList.hashCode());
+            System.out.println("linkedTaskList hashcode: " + linkedTaskList.hashCode());
+            System.out.println("factoryArrayList hashcode: " + factoryArrayList.hashCode());
+            System.out.println("nonRepTask hashcode: " + nonRepTask.hashCode());
+            System.out.println("repTask hashcode: " + repTask.hashCode());
+
+            System.out.println("********************");
+            System.out.println("*** Trying toString method ***");
+            System.out.println("anotherTaskList:\r " + anotherTaskList);
+            System.out.println("linkedTaskList:\r " + linkedTaskList);
+            System.out.println("factoryArrayList:\r " + factoryArrayList);
+            System.out.println("nonRepTask: " + nonRepTask);
+            System.out.println("repTask: " + repTask);
+
+            System.out.println("********************");
+            System.out.println("*** Trying clone method ***");
+            System.out.println("linkedTaskList:" + linkedTaskList);
+            AbstractTaskList clonedLinkedTaskList = (AbstractTaskList) linkedTaskList.clone();
+            System.out.println("clonedLinkedTaskList: " + clonedLinkedTaskList);
+
+            System.out.println("**** Trying Iterator ****");
+            for (Tasks task:
+                 linkedTaskList) {
+                System.out.println(task);
+            }
+
+
+
+
+
 
 
 		}
 		catch (Exception e) {
 			e.getMessage();
+			e.printStackTrace();
 		}
 
 	}

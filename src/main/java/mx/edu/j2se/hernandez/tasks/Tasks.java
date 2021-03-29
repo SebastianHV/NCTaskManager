@@ -1,5 +1,7 @@
 package mx.edu.j2se.hernandez.tasks;
 
+import java.util.Objects;
+
 public class Tasks {
 
     private String title;
@@ -156,5 +158,36 @@ public class Tasks {
     // Set if the Task is repetitive or not
     public void setRepetitive(boolean repetitive) {
         this.repetitive = repetitive;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        // if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tasks tasks = (Tasks) o;
+        return time == tasks.time && start == tasks.start && end == tasks.end && interval == tasks.interval && active == tasks.active && repetitive == tasks.repetitive && Objects.equals(title, tasks.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, time, start, end, interval, active, repetitive);
+    }
+
+    @Override
+    public String toString() {
+        return "Tasks{" +
+                "Task Title='" + title + '\'' +
+                ", Repetitive = " + repetitive +
+                ", Active = " + active +
+                ", Time (Non Rep) = " + time +
+                ", Start Time = " + start +
+                ", End Time = " + end +
+                ", Interval = " + interval +
+                '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
