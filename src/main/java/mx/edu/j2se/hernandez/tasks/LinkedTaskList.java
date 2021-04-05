@@ -1,6 +1,13 @@
 package mx.edu.j2se.hernandez.tasks;
 
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 public class LinkedTaskList extends AbstractTaskList{
 
     // The first element of the linked list is our head
@@ -8,18 +15,18 @@ public class LinkedTaskList extends AbstractTaskList{
 
     // This class will allow us to store every task and link it to the following task in the list
     static class Node {
-        Tasks data;
+        Task data;
         Node next; // This is a reference to the next Task in the list
 
-        Node(Tasks task) {
+        Node(Task task) {
             data = task;
             next = null;
         }
     }
 
     // This method will add a Task to the list
-    public void add(Tasks task) throws Exception {
-        if (task instanceof Tasks) {
+    public void add(Task task) throws Exception {
+        if (task instanceof Task) {
             Node newNode = new Node(task);
             // If head is empty, this new Task is the first one
             if (headOfList == null) {
@@ -41,7 +48,7 @@ public class LinkedTaskList extends AbstractTaskList{
     }
 
     // This method will search into the linked list for the Task to remove
-    public boolean remove(Tasks task) {
+    public boolean remove(Task task) {
         Node currentNode = headOfList; // The node we are placed in
         Node previousNode = null; // The previous node, will help us to link the previous node to the next node
         while (currentNode != null) {
@@ -74,7 +81,7 @@ public class LinkedTaskList extends AbstractTaskList{
     }
 
     // Returns the task from the list whose index is the given one
-    public Tasks getTask(int index) throws IllegalArgumentException {
+    public Task getTask(int index) throws IllegalArgumentException {
         int currentTaskNumber = 0;
         Node currentNode = headOfList;
         while (currentNode != null) {
@@ -92,22 +99,23 @@ public class LinkedTaskList extends AbstractTaskList{
     }
 
     // Returns a list of tasks that occur from the time to the given time.
-    public LinkedTaskList incoming(int from, int to) {
-        LinkedTaskList incomingTasksList = new LinkedTaskList();
-        Node currentNode = headOfList;
-        while (currentNode != null) {
-            int nextTimeFrom = currentNode.data.nextTimeAfter(from);
-            if (nextTimeFrom <= to && nextTimeFrom != -1) {
-                try {
-                    incomingTasksList.add(currentNode.data);
-                } catch (Exception e) {
-                    e.getMessage();
-                }
-            }
-            currentNode = currentNode.next;
-        }
-        return incomingTasksList;
-    }
+//    public LinkedTaskList incoming(int from, int to) {
+//        LinkedTaskList incomingTasksList = new LinkedTaskList();
+//        Node currentNode = headOfList;
+//        while (currentNode != null) {
+//            int nextTimeFrom = currentNode.data.nextTimeAfter(from);
+//            if (nextTimeFrom <= to && nextTimeFrom != -1) {
+//                try {
+//                    incomingTasksList.add(currentNode.data);
+//                } catch (Exception e) {
+//                    e.getMessage();
+//                }
+//            }
+//            currentNode = currentNode.next;
+//        }
+//        return incomingTasksList;
+//    }
+
 
     public String getList() {
         Node currentNode = headOfList;
@@ -120,5 +128,12 @@ public class LinkedTaskList extends AbstractTaskList{
         return toRet;
     }
 
+    // Will allow us to work with a Stream of Task
+    @Override
+    public Stream<Task> getStream() {
+        return StreamSupport.stream(
+                Spliterators.spliterator(this.iterator(), this.size(), Spliterator.NONNULL),
+                false);
+    }
 
 }

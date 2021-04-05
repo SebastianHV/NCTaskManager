@@ -1,31 +1,29 @@
 package mx.edu.j2se.hernandez.tasks;
 
 
-import java.util.Iterator;
-
 public class Main {
 	
 	public static void main(String[] args) {
 
 		try {
 			//making a non-repetitive task;
-			Tasks nonRepTask = new Tasks("Birthday", 7);
+			Task nonRepTask = new Task("Birthday", 7);
 			nonRepTask.setActive(true);
 			//making a repetitive task;
-			Tasks repTask = new Tasks("Wake up alarm", 6, 78, 24);
+			Task repTask = new Task("Wake up alarm", 6, 78, 24);
 			repTask.setActive(true);
 			// making and inactive task;
-			Tasks inactiveTask = new Tasks("Inactive task", 13);
+			Task inactiveTask = new Task("Inactive task", 13);
 
 			System.out.println("********************");
 			System.out.println("Next time of execution for " + inactiveTask.getTitle() + ": " + inactiveTask.nextTimeAfter(55));
 
 			// Making lots of active tasks
-			Tasks lunchTask = new Tasks("Lunch time alarm", 12, 252, 24);
+			Task lunchTask = new Task("Lunch time alarm", 12, 252, 24);
 			lunchTask.setActive(true);
-			Tasks tvShowTask = new Tasks("My favorite TV show time", 20, 120, 24);
+			Task tvShowTask = new Task("My favorite TV show time", 20, 120, 24);
 			tvShowTask.setActive(true);
-			Tasks meetingTask = new Tasks("Important meeting with customers", 200);
+			Task meetingTask = new Task("Important meeting with customers", 200);
 			meetingTask.setActive(true);
 
 
@@ -55,7 +53,7 @@ public class Main {
 			System.out.println("Printing the Array List: " + taskList.getArrayTaskList().toString());
 
 			System.out.println("***** Incoming tasks from hour 200 to 260: *****");
-			ArrayTaskList incomingTasks = taskList.incoming(200, 260);
+			AbstractTaskList incomingTasks = taskList.incoming(200, 260);
 			for (int i = 0; i < incomingTasks.size(); i++) {
 				System.out.println(incomingTasks.getTask(i).getTitle());
 
@@ -75,9 +73,9 @@ public class Main {
 			System.out.println("Third task of the list: " + linkedTaskList.getTask(2).getTitle());
 			System.out.println("Hi");
 			System.out.println("***** Incoming tasks from hour 200 to 260: *****");
-			LinkedTaskList linkedIncomingTasks = linkedTaskList.incoming(200, 260);
-			System.out.println(linkedIncomingTasks.getList());
-			System.out.println("********************");
+			AbstractTaskList linkedIncomingTasks = linkedTaskList.incoming(200, 260);
+			System.out.println(linkedIncomingTasks);
+			System.out.println("***** Incoming tasks from hour 200 to 260 ENDS *****");
 			System.out.println("***** Creating a Task List with the TaskListFactory *****");
 			AbstractTaskList factoryArrayList = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
 			AbstractTaskList factoryLinkedList = TaskListFactory.createTaskList(ListTypes.types.LINKED);
@@ -85,7 +83,7 @@ public class Main {
 			System.out.println("*** Printing List with Iterator ***");
 			// Iterator<Tasks> ite = factoryLinkedList.iterator();
 			System.out.println("factoryLinkedList reference: " + linkedTaskList);
-			for (Tasks task: linkedTaskList ) {
+			for (Task task: linkedTaskList ) {
 				System.out.println(task.getTitle());
 
 			}
@@ -117,7 +115,7 @@ public class Main {
             System.out.println("clonedLinkedTaskList: " + clonedLinkedTaskList);
 
             System.out.println("**** Trying Iterator ****");
-            for (Tasks task:
+            for (Task task:
                  linkedTaskList) {
                 System.out.println(task);
             }

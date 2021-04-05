@@ -2,7 +2,7 @@ package mx.edu.j2se.hernandez.tasks;
 
 import java.util.Objects;
 
-public class Tasks {
+public class Task {
 
     private String title;
     private int time;
@@ -13,7 +13,7 @@ public class Tasks {
     private boolean repetitive;
 
     // Constructor for non-repetitive tasks
-    public Tasks(String title, int time) throws IllegalArgumentException {
+    public Task(String title, int time) throws IllegalArgumentException {
         if (time < 0) {
             throw new IllegalArgumentException("The time must not be a negative number");
         }
@@ -25,7 +25,7 @@ public class Tasks {
     }
 
     // Constructor for repetitive tasks
-    public Tasks(String title, int start, int end, int interval) throws IllegalArgumentException {
+    public Task(String title, int start, int end, int interval) throws IllegalArgumentException {
         if (start < 0 || end < 0) {
             throw new IllegalArgumentException("The start and end time must not are negative numbers");
         }
@@ -164,7 +164,7 @@ public class Tasks {
     public boolean equals(Object o) {
         // if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Tasks tasks = (Tasks) o;
+        Task tasks = (Task) o;
         return time == tasks.time && start == tasks.start && end == tasks.end && interval == tasks.interval && active == tasks.active && repetitive == tasks.repetitive && Objects.equals(title, tasks.title);
     }
 

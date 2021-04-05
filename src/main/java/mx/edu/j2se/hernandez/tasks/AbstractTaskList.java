@@ -1,34 +1,57 @@
 package mx.edu.j2se.hernandez.tasks;
 
-import javafx.concurrent.Task;
-
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 // Parent class of ArrayTaskList and LinkedTaskList
-public abstract class AbstractTaskList implements Iterable<Tasks>, Cloneable {
+public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
 
-    public abstract void add(Tasks task) throws Exception;
+    public abstract void add(Task task) throws Exception;
 
-    public abstract boolean remove(Tasks task);
+    public abstract boolean remove(Task task);
 
     public abstract int size();
 
-    public abstract Tasks getTask(int index) throws Exception;
+    public abstract Task getTask(int index) throws Exception;
 
     /*
      In this case, even the incoming method depends on the way we access the list (array or linked)
      Thus, we make incoming(int from, int to) abstract, as well.
     */
-    public abstract AbstractTaskList incoming(int from, int to);
+    /*
+      Now, we implement the incoming method through lambda expressions and the Java 8 Streams
+     */
+    public final AbstractTaskList incoming(int from, int to){
+        try {
+            AbstractTaskList returningList;
+            if (this instanceof ArrayTaskList) returningList = new ArrayTaskList();
+            else returningList = new LinkedTaskList();
+            Stream<Task> taskStream = this.getStream();
+            // taskStream.filter(task -> task.nextTimeAfter(from) <= to && task.nextTimeAfter(from) != -1).map(task -> task.getTitle()).forEach(System.out::println);
+            taskStream.filter(task -> task.nextTimeAfter(from) <= to && task.nextTimeAfter(from) != -1).forEach(task -> {
+                try {
+                    returningList.add(task);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
+            return returningList;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     // This is the iterator method that will let us use the enhanced for each loop in the TaskList Class
     @Override
-    public Iterator<Tasks> iterator() {
+    public Iterator<Task> iterator() {
         int size = this.size();
         AbstractTaskList taskList = this;
         // System.out.println("Iterator taskList reference" + taskList);
 
-        Iterator<Tasks> it = new Iterator<Tasks>() {
+        Iterator<Task> it = new Iterator<Task>() {
             int currentIndex = 0;
 
             @Override
@@ -39,10 +62,10 @@ public abstract class AbstractTaskList implements Iterable<Tasks>, Cloneable {
             }
 
             @Override
-            public Tasks next() {
+            public Task next() {
                 // System.out.println("Inside next method");
                 // System.out.println("currentIndex value: " + currentIndex);
-                Tasks newTask = null;
+                Task newTask = null;
                 try {
                     newTask = taskList.getTask(currentIndex);
                 } catch (Exception e) {
@@ -89,7 +112,7 @@ public abstract class AbstractTaskList implements Iterable<Tasks>, Cloneable {
     @Override
     public int hashCode() {
         int toRet = 0;
-        for (Tasks task: this) {
+        for (Task task: this) {
             toRet = toRet + task.hashCode();
         }
         return toRet;
@@ -100,7 +123,7 @@ public abstract class AbstractTaskList implements Iterable<Tasks>, Cloneable {
     public String toString() {
         // String toRet = "\nTitle             *** Repetitive *** Active *** Time (Non repetitive) *** Start Time - End Time *** Interval\n";
         String toRet = "\n*** Printing TaskList ****************************************************************************************************************\n";
-        for (Tasks task:
+        for (Task task:
              this) {
             // toRet = toRet + task.getTitle() + "          |---| " + task.isRepetitive() + " |---| " + task.isActive() + " |---| " + task.getTime() + " |---| " + task.getStartTime() + " |---| " + task.getEndTime() + task.getRepeatInterval() + " |\n";
             toRet += "| " + task + " |\n";
@@ -136,18 +159,16 @@ public abstract class AbstractTaskList implements Iterable<Tasks>, Cloneable {
         // This will remove the not cloned tasks from the cloned List
 //        for (Tasks task : clonedList) {
 //            try {
-//                System.out.println("Current task: " + task);
-//                clonedList.remove(task);
-//            }
+//                System.out.println("Current task: " + task); }
 //            catch (Exception e){
 //                e.getMessage();
 //            }
 //        }
 
         // This will add the cloned tasks from the original List
-        for (Tasks task : this) {
+        for (Task task : this) {
             try {
-                clonedList.add((Tasks) task.clone());
+                clonedList.add((Task) task.clone());
             }
             catch (Exception e){
                 e.getMessage();
@@ -156,4 +177,8 @@ public abstract class AbstractTaskList implements Iterable<Tasks>, Cloneable {
 
         return clonedList;
     }
+
+    // Abstract class for the getStream method
+    public abstract Stream<Task> getStream();
+
 }
