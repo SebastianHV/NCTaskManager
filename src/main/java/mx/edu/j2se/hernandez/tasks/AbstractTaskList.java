@@ -21,28 +21,28 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
     /*
       Now, we implement the incoming method through lambda expressions and the Java 8 Streams
      */
-    public final AbstractTaskList incoming(int from, int to){
-        try {
-            AbstractTaskList returningList;
-            if (this instanceof ArrayTaskList) returningList = new ArrayTaskList();
-            else returningList = new LinkedTaskList();
-            Stream<Task> taskStream = this.getStream();
-            // taskStream.filter(task -> task.nextTimeAfter(from) <= to && task.nextTimeAfter(from) != -1).map(task -> task.getTitle()).forEach(System.out::println);
-            taskStream.filter(task -> task.nextTimeAfter(from) <= to && task.nextTimeAfter(from) != -1).forEach(task -> {
-                try {
-                    returningList.add(task);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-
-            return returningList;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public final AbstractTaskList incoming(int from, int to){
+//        try {
+//            AbstractTaskList returningList;
+//            if (this instanceof ArrayTaskList) returningList = new ArrayTaskList();
+//            else returningList = new LinkedTaskList();
+//            Stream<Task> taskStream = this.getStream();
+//            // taskStream.filter(task -> task.nextTimeAfter(from) <= to && task.nextTimeAfter(from) != -1).map(task -> task.getTitle()).forEach(System.out::println);
+//            taskStream.filter(task -> task.nextTimeAfter(from) <= to && task.nextTimeAfter(from) != -1).forEach(task -> {
+//                try {
+//                    returningList.add(task);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//
+//            return returningList;
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     // This is the iterator method that will let us use the enhanced for each loop in the TaskList Class
     @Override

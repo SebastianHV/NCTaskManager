@@ -54,7 +54,7 @@ public class LinkedTaskList extends AbstractTaskList{
         while (currentNode != null) {
             if (currentNode.data.equals(task)) {
                 if (currentNode.equals(headOfList)){
-                    headOfList.next = null; // We unlink the deleted Task
+                    //headOfList.next = null; // We unlink the deleted Task
                     headOfList = currentNode.next;
                 }
                 else {
