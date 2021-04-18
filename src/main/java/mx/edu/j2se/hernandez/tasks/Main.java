@@ -1,6 +1,11 @@
 package mx.edu.j2se.hernandez.tasks;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.File;
+import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.SortedMap;
@@ -15,13 +20,13 @@ public class Main {
 			Task nonRepTask = new Task("Birthday", LocalDateTime.of(2021, 8, 31, 0, 0));
 			nonRepTask.setActive(true);
 			//making a repetitive task;
-			Task repTask = new Task("Wake up alarm", LocalDateTime.of(2021, 1, 1, 0, 0), LocalDateTime.of(2022, 01,01,0,0), 1);
+			Task repTask = new Task("Wake up alarm", LocalDateTime.of(2021, 1, 1, 6, 0), LocalDateTime.of(2022, 01,01,6,0), 1);
 			repTask.setActive(true);
 			// making and inactive task;
 			Task inactiveTask = new Task("Inactive task", LocalDateTime.of(2021,6,2,0,0));
 
 			System.out.println("********************");
-			System.out.println(nonRepTask.getTitle() + "Date and Time : " + repTask.getTime());
+			System.out.println(nonRepTask.getTitle() + " Date and Time : " + nonRepTask.getTime());
 			System.out.println("We are going to compare against this date and time: " + LocalDateTime.of(2021,9,1,0,0));
 			System.out.println("Next time of execution for " + repTask.getTitle() + ": " + repTask.nextTimeAfter(LocalDateTime.of(2021,9,1,0,0)));
 
@@ -65,6 +70,35 @@ public class Main {
 			SortedMap<LocalDateTime, Set<Task>> cal = new TreeMap<>();
 			cal = Tasks.calendar(factoryLinkedList, LocalDateTime.of(2021,8,31,14,0), LocalDateTime.of(2021,12,31,13,59));
 			System.out.println(cal);
+
+			File myFile = new File("tasks.str");
+			AbstractTaskList taskListFromFile = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
+
+			TaskIO.writeBinary(factoryLinkedList, myFile);
+
+			TaskIO.readBinary(taskListFromFile, myFile);
+
+			System.out.println("*** Printing ArrayList retrieved from the file tasks.str ***");
+			System.out.println(taskListFromFile);
+			System.out.println(factoryLinkedList.equals(taskListFromFile));
+			System.out.println(factoryLinkedList.hashCode());
+			System.out.println(taskListFromFile.hashCode());
+
+
+			System.out.println("*** Making a jsonFile.json to put the TaskList there ***");
+			File myJSONFile = new File("jsonFile.json");
+			TaskIO.writeText(factoryLinkedList, myJSONFile);
+
+			AbstractTaskList taskListFromJSONFile = TaskListFactory.createTaskList(ListTypes.types.ARRAY);
+
+			TaskIO.readText(taskListFromJSONFile, myJSONFile);
+			System.out.println("*** Printing ArrayList retrieved from the file jsonFile.json ***");
+			System.out.println(taskListFromJSONFile);
+
+
+
+
+
 
 //
 //			ArrayTaskList taskList = new ArrayTaskList();
